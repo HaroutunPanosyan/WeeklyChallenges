@@ -14,29 +14,16 @@ namespace ChallengesWithTestsMark8
 
         public bool CountOfElementsIsEven(string[] vals) => vals.Length % 2 == 0 ? true : false;
 
-        public bool IsNumberEven(int number) => number % 2 == 0 ? true : false;
+        public bool IsNumberEven(int number) => number % 2 == 0;
 
         public bool IsNumberOdd(int num) => num % 2 == 1 || num % 2 == -1 ? true : false;
 
         public double SumOfMinAndMax(IEnumerable<double> numbers) => numbers?.Any() == true ? numbers.Min() + numbers.Max() : 0;
 
-        public int GetLengthOfShortestString(string str1, string str2)
-        {
-            if (str1 == str2)
-            {
-                return str1.Length;
-            }
-            else if (str1.Length < str2.Length)
-            {
-                return str1.Length;
-            }
-            else 
-            { 
-                return str2.Length; 
-            }
-        }
+        public int GetLengthOfShortestString(string str1, string str2) => str1.Length <= str2.Length ? str1.Length : str2.Length;
+      
 
-        public int Sum(int[] numbers) => numbers != null ? numbers.Sum() : 0;
+        public int Sum(int[] numbers) => numbers != null ? numbers.Sum() : 0; // numbers?.Sum() ?? 0;
 
         public int SumEvens(int[] numbers)
         {
@@ -61,6 +48,18 @@ namespace ChallengesWithTestsMark8
             {
                 return 0; 
             }
+
+            /* Linq :
+             *
+             * return numbers?.Where(x => x % 2 == 0).Sum() ?? 0;
+             *                                             ^^--- Null Coalesing. 
+             *
+             * Aggregate:
+             *
+             * => numbers?.Aggregate(0, (total, next) => next % 2 -- 0? total + next : total) ?? 0;
+             *
+            */
+
         }
 
         public bool IsSumOdd(List<int> numbers)
@@ -74,10 +73,13 @@ namespace ChallengesWithTestsMark8
                 return true;
             }
             return false;
+
+            // numbers?.Any() ?? false ? numbers.Sum() % 2 != 0 : false;
         }
 
         public long CountOfPositiveOddsBelowNumber(long number)
         {
+            // return number < - ? 0 : number / 2;
             if (number != null)
             {
                 int counter = 0;         
